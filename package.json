@@ -1,0 +1,13 @@
+{
+  "name": "wristcam",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Phone-camera golf wrist trainer with audible feedback at P-positions",
+  "scripts": {
+    "dev": "node scripts/serve.mjs 5174",
+    "test": "node --test tests/*.test.mjs",
+    "deploy:staging": "node scripts/deploy.mjs staging",
+    "deploy:production": "node scripts/deploy.mjs production"
+  }
+}

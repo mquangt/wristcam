@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0f0d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>WristCam</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main id="stage">
+    <video id="video" playsinline muted autoplay></video>
+    <canvas id="overlay"></canvas>
+
+    <header class="topbar">
+      <div class="brand">WristCam <span id="envBadge" class="badge" hidden>STAGING</span></div>
+      <div class="seg" role="tablist" aria-label="Mode">
+        <button data-mode="drill" role="tab">Drill</button>
+        <button data-mode="swing" role="tab">Swing</button>
+      </div>
+      <button id="btnSettings" class="icon" aria-label="Settings">⚙</button>
+    </header>
+
+    <section id="hud" hidden>
+      <div class="chips">
+        <span id="chipPhase" class="chip">Waiting</span>
+        <span id="chipPos" class="chip"></span>
+        <span id="chipSrc" class="chip dim"></span>
+        <span id="chipFps" class="chip dim"></span>
+      </div>
+      <div class="readout">
+        <div class="metric big"><label>Lead wrist</label><b id="valFe">–</b><small id="tgtFe"></small></div>
+        <div class="metric"><label>Hinge</label><b id="valDev">–</b><small id="tgtDev"></small></div>
+        <div class="metric"><label>Arm bend</label><b id="valArm">–</b><small id="tgtArm"></small></div>
+      </div>
+      <div class="hud-actions">
+        <button id="btnCapture" class="ghost" hidden>Set target from this position</button>
+        <button id="btnReplay" class="ghost" hidden>Replay last swing</button>
+        <button id="btnStop" class="ghost">Stop</button>
+      </div>
+    </section>
+
+    <section id="results" class="sheet small" hidden></section>
+
+    <section id="start" class="panel">
+      <h1>WristCam</h1>
+      <p class="lead">Camera wrist trainer. Set your phone up, swing, and hear when your lead wrist is out of position at P2, P3, the top and beyond.</p>
+      <div class="start-actions">
+        <button id="btnCamera" class="primary">Start camera</button>
+        <label class="button secondary">Analyze a video<input id="fileInput" type="file" accept="video/*" hidden></label>
+      </div>
+      <p id="status" class="status" aria-live="polite"></p>
+      <details class="tips">
+        <summary>Camera setup</summary>
+        <ul>
+          <li><b>Down the line</b>: phone at hand height, 2.5–3.5 m behind you, on your target line, landscape or portrait with your whole body and club in frame.</li>
+          <li><b>Face on</b>: phone level with your hands, 2.5–3 m in front of you. Wrist cupping/bowing reads best from here.</li>
+          <li>Keep the phone level and still (a tripod or bag stand helps). Good light, no backlight.</li>
+          <li>Address the ball and hold still for half a second: the app arms itself, then swing.</li>
+          <li><b>Drill</b> mode beeps continuously while you rehearse slowly or hold a position. <b>Swing</b> mode beeps at each checkpoint during a full swing.</li>
+          <li>Turn the volume up. On iPhone it plays even with the silent switch on (iOS 16.4+).</li>
+        </ul>
+      </details>
+      <p class="fine">Camera readings are estimates from a single 2D video. Use the presets as a starting point and the "Set target from this position" button to calibrate to your own swing.</p>
+    </section>
+  </main>
+
+  <dialog id="settings" class="sheet">
+    <form method="dialog" id="settingsForm">
+      <header class="sheet-head"><h2>Settings</h2><button class="icon" value="close" aria-label="Close">✕</button></header>
+      <div id="settingsBody"></div>
+      <p id="version" class="fine"></p>
+    </form>
+  </dialog>
+
+  <dialog id="replay" class="sheet">
+    <header class="sheet-head"><h2>Replay</h2><button class="icon" id="btnReplayClose" aria-label="Close">✕</button></header>
+    <canvas id="replayCanvas"></canvas>
+    <input id="replaySlider" type="range" min="0" max="0" value="0">
+    <div id="replayChips" class="chips wrap"></div>
+    <div class="hud-actions"><button id="btnReplayPlay" class="ghost">Play slow-mo</button></div>
+  </dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
